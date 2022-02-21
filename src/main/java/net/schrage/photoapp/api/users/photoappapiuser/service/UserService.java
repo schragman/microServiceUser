@@ -1,4 +1,4 @@
-package net.schrage.photoapp.api.users.photoappapiuser.shared.service;
+package net.schrage.photoapp.api.users.photoappapiuser.service;
 
 import net.schrage.photoapp.api.users.photoappapiuser.shared.UserDto;
 

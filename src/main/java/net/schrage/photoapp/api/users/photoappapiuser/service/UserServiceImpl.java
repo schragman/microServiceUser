@@ -1,11 +1,10 @@
-package net.schrage.photoapp.api.users.photoappapiuser.shared.service;
+package net.schrage.photoapp.api.users.photoappapiuser.service;
 
+import net.schrage.photoapp.api.users.photoappapiuser.data.UserEntity;
+import net.schrage.photoapp.api.users.photoappapiuser.data.UsersRepository;
 import net.schrage.photoapp.api.users.photoappapiuser.shared.UserDto;
-import net.schrage.photoapp.api.users.photoappapiuser.shared.service.data.UserEntity;
-import net.schrage.photoapp.api.users.photoappapiuser.shared.service.data.UsersRepository;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
-import org.modelmapper.spi.MatchingStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

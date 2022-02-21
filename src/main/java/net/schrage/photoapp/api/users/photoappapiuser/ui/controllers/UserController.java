@@ -1,7 +1,7 @@
 package net.schrage.photoapp.api.users.photoappapiuser.ui.controllers;
 
+import net.schrage.photoapp.api.users.photoappapiuser.service.UserService;
 import net.schrage.photoapp.api.users.photoappapiuser.shared.UserDto;
-import net.schrage.photoapp.api.users.photoappapiuser.shared.service.UserService;
 import net.schrage.photoapp.api.users.photoappapiuser.ui.model.CreateUserRequestModel;
 import net.schrage.photoapp.api.users.photoappapiuser.ui.model.CreateUserResponseModel;
 import org.modelmapper.ModelMapper;
