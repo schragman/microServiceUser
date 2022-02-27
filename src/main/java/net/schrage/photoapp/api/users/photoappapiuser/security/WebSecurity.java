@@ -33,17 +33,20 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     //http.authorizeRequests().antMatchers("/users/**").permitAll();
 
     //Nur eine bestimmte IP-Adresse vom Anfrager zulassen.
-    http.authorizeRequests().antMatchers("/users/**").hasIpAddress(environment.getProperty("gateway.ip"))
-    .and()
-    .addFilter(getAuthenticationFilter());
+    http.authorizeRequests()
+        .antMatchers("/users/**")
+        .permitAll() // falls keine bestimmte IP-Adresse gefiltert werden soll
+        //.hasIpAddress(environment.getProperty("gateway.ip"))
+        .and()
+        .addFilter(getAuthenticationFilter());
 
     http.headers().frameOptions().disable();
   }
 
   private AuthenticationFilter getAuthenticationFilter() throws Exception{
     AuthenticationFilter authenticationFilter = new AuthenticationFilter(userService, environment, authenticationManager());
-    //authenticationFilter.setFilterProcessesUrl(environment.getProperty("login.url.path"));
-    //authenticationFilter.setAuthenticationManager(authenticationManager());
+    authenticationFilter.setFilterProcessesUrl(environment.getProperty("login.url.path")); //Hier kann noch eine andere Login-Url hinterlegt werden
+    //authenticationFilter.setAuthenticationManager(authenticationManager()); // wird jetzt im Constructor übergeben
     return authenticationFilter;
   }
 
