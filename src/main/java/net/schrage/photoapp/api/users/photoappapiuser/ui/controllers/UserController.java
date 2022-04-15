@@ -27,6 +27,7 @@ public class UserController {
 
   @GetMapping("/status/check")
   public String status() {
+    //über env.getProperty die für die Umgebung gezogenen Propeties abgreifen.
     return "Working on port " + env.getProperty("local.server.port") + " with token: " + env.getProperty("token.secret");
   }
 
@@ -34,7 +35,6 @@ public class UserController {
       consumes = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE},
       produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE}
       )
-
   public ResponseEntity<CreateUserResponseModel> createUser(@RequestBody @Valid CreateUserRequestModel userDetails) {
 
     ModelMapper modelMapper = new ModelMapper();
