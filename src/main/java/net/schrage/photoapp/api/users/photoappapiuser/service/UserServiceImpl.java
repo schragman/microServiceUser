@@ -1,5 +1,7 @@
 package net.schrage.photoapp.api.users.photoappapiuser.service;
 
+import feign.FeignException;
+import net.schrage.photoapp.api.users.photoappapiuser.data.AlbumsServiceClient;
 import net.schrage.photoapp.api.users.photoappapiuser.data.UserEntity;
 import net.schrage.photoapp.api.users.photoappapiuser.data.UsersRepository;
 import net.schrage.photoapp.api.users.photoappapiuser.shared.UserDto;
@@ -7,6 +9,8 @@ import net.schrage.photoapp.api.users.photoappapiuser.ui.model.AlbumResponseMode
 import org.bouncycastle.math.raw.Mod;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.env.Environment;
@@ -30,15 +34,19 @@ public class UserServiceImpl implements UserService {
 
   private UsersRepository usersRepository;
   private BCryptPasswordEncoder bCryptPasswordEncoder;
-  private RestTemplate restTemplate;
+  //private RestTemplate restTemplate;
+  private AlbumsServiceClient albumsServiceClient;  //Feign-Client
   private Environment env;
+
+  private Logger logger = LoggerFactory.getLogger(this.getClass());
 
   @Autowired
   public UserServiceImpl(UsersRepository usersRepository, BCryptPasswordEncoder bCryptPasswordEncoder,
-                         RestTemplate restTemplate, Environment env) {
+                         AlbumsServiceClient albumsServiceClient, Environment env) {
     this.usersRepository = usersRepository;
     this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-    this.restTemplate = restTemplate;
+    //this.restTemplate = restTemplate;
+    this.albumsServiceClient = albumsServiceClient;
     this.env = env;
   }
 
@@ -87,14 +95,22 @@ public class UserServiceImpl implements UserService {
 
     UserDto userDto = new ModelMapper().map(userEntity, UserDto.class);
 
-    String albumsUrl = String.format(env.getProperty("albums.url"), userId);
+    /*String albumsUrl = String.format(env.getProperty("albums.url"), userId);
 
     ResponseEntity<List<AlbumResponseModel>> albumsListResponse = restTemplate.
         exchange(albumsUrl, HttpMethod.GET, null, new ParameterizedTypeReference<List<AlbumResponseModel>>() {
         });
 
+    List<AlbumResponseModel> albumsList = albumsListResponse.getBody();*/
 
-    List<AlbumResponseModel> albumsList = albumsListResponse.getBody();
+    /*List<AlbumResponseModel> albumsList = null;
+    try {
+      albumsList = albumsServiceClient.getAlbums(userId);
+    } catch (FeignException e) {
+      logger.error(e.getLocalizedMessage());
+    }*/
+
+    List<AlbumResponseModel> albumsList = albumsServiceClient.getAlbums(userId);
 
     userDto.setAlbums(albumsList);
 
