@@ -1,9 +1,12 @@
 package net.schrage.photoapp.api.users.photoappapiuser.shared;
 
+import net.schrage.photoapp.api.users.photoappapiuser.ui.model.AlbumResponseModel;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Data Transfer Object, um das User-Objekt, welches vom Client (UI) geschickt wird, in eines zu transferieren
@@ -19,6 +22,7 @@ public class UserDto implements Serializable {
   private String userId;  //Der Client hat aus Sicherheitsgründen nur Zugriff auf die externe Id und nicht
   //die von der Datenbank generierten
   private String encryptedPassword;
+  private List<AlbumResponseModel> albums;
 
   public String getFirstName() {
     return firstName;
@@ -66,5 +70,13 @@ public class UserDto implements Serializable {
 
   public void setEncryptedPassword(String encryptedPassword) {
     this.encryptedPassword = encryptedPassword;
+  }
+
+  public List<AlbumResponseModel> getAlbums() {
+    return albums;
+  }
+
+  public void setAlbums(List<AlbumResponseModel> albums) {
+    this.albums = albums;
   }
 }
