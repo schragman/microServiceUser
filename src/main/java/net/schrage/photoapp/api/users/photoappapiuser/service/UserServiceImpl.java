@@ -1,6 +1,8 @@
 package net.schrage.photoapp.api.users.photoappapiuser.service;
 
 import feign.FeignException;
+import feign.Request;
+import feign.RequestTemplate;
 import net.schrage.photoapp.api.users.photoappapiuser.data.AlbumsServiceClient;
 import net.schrage.photoapp.api.users.photoappapiuser.data.UserEntity;
 import net.schrage.photoapp.api.users.photoappapiuser.data.UsersRepository;
@@ -26,6 +28,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -91,6 +94,11 @@ public class UserServiceImpl implements UserService {
     UserEntity userEntity = usersRepository.findByUserId(userId);
     if (userEntity == null) {
       throw new UsernameNotFoundException("User not found");
+    }
+
+    Request request = Request.create(Request.HttpMethod.GET, "url", new HashMap<>(),null, new RequestTemplate());
+    if (true) {
+      throw new FeignException.BadRequest("no customer", request, null, null);
     }
 
     UserDto userDto = new ModelMapper().map(userEntity, UserDto.class);

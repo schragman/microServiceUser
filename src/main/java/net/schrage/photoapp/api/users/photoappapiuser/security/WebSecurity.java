@@ -4,6 +4,7 @@ import net.schrage.photoapp.api.users.photoappapiuser.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -37,6 +38,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         .antMatchers("/users/**")
         .permitAll() // falls keine bestimmte IP-Adresse gefiltert werden soll
         //.hasIpAddress(environment.getProperty("gateway.ip"))
+        .antMatchers(HttpMethod.GET, "/actuator/health").permitAll()
+        .antMatchers(HttpMethod.GET, "/actuator/circuitbreakerevents").permitAll()
         .and()
         .addFilter(getAuthenticationFilter());
 
